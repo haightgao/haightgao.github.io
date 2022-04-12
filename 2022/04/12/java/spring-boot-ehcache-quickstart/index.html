@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 5.4.1">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto+Sans+SC:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" integrity="sha256-DfWjNxDkM94fVBWx1H5BMMp0Zq7luBlV8QRcSES7s+0=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/themes/blue/pace-theme-minimal.css">
+  <script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"haightgao.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.11.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"algolia":{"appID":"CP7VU9VBF4","apiKey":"1e122b685321615480682b9ef19c87ba","indexName":"hexo_blog","hits":{"per_page":10}}}</script><script src="/js/config.js"></script>
+
+    <meta property="og:type" content="article">
+<meta property="og:title" content="Spring Boot Ehcache">
+<meta property="og:url" content="https://haightgao.github.io/2022/04/12/java/spring-boot-ehcache-quickstart/index.html">
+<meta property="og:site_name" content="CRUD">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://haightgao.github.io/2022/04/12/java/spring-boot-ehcache-quickstart/banner.jpeg">
+<meta property="article:published_time" content="2022-04-12T08:53:49.000Z">
+<meta property="article:modified_time" content="2022-04-12T12:46:08.613Z">
+<meta property="article:author" content="haight">
+<meta property="article:tag" content="java">
+<meta property="article:tag" content="spring boot">
+<meta property="article:tag" content="cache">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://haightgao.github.io/2022/04/12/java/spring-boot-ehcache-quickstart/banner.jpeg">
+
+
+<link rel="canonical" href="https://haightgao.github.io/2022/04/12/java/spring-boot-ehcache-quickstart/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://haightgao.github.io/2022/04/12/java/spring-boot-ehcache-quickstart/","path":"2022/04/12/java/spring-boot-ehcache-quickstart/","title":"Spring Boot Ehcache"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Spring Boot Ehcache | CRUD</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">CRUD</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">Inside developer</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container"></div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container">
+  <div class="algolia-stats"><hr></div>
+  <div class="algolia-hits"></div>
+  <div class="algolia-pagination"></div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%9B%B8%E5%85%B3%E6%B3%A8%E8%A7%A3"><span class="nav-number">1.</span> <span class="nav-text">相关注解</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#CacheConfig"><span class="nav-number">1.1.</span> <span class="nav-text">@CacheConfig</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Cacheable"><span class="nav-number">1.2.</span> <span class="nav-text">@Cacheable</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CachePut"><span class="nav-number">1.3.</span> <span class="nav-text">@CachePut</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CacheEvict"><span class="nav-number">1.4.</span> <span class="nav-text">@CacheEvict</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Caching"><span class="nav-number">1.5.</span> <span class="nav-text">@Caching</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE"><span class="nav-number">2.</span> <span class="nav-text">环境配置</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B7%BB%E5%8A%A0%E4%BE%9D%E8%B5%96"><span class="nav-number">2.1.</span> <span class="nav-text">添加依赖</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BC%93%E5%AD%98%E9%85%8D%E7%BD%AE"><span class="nav-number">2.2.</span> <span class="nav-text">缓存配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#springboot-%E7%BC%93%E5%AD%98%E9%85%8D%E7%BD%AE"><span class="nav-number">2.3.</span> <span class="nav-text">springboot 缓存配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%90%AF%E5%8A%A8%E7%BC%93%E5%AD%98"><span class="nav-number">2.4.</span> <span class="nav-text">启动缓存</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E7%BC%93%E5%AD%98"><span class="nav-number">3.</span> <span class="nav-text">使用缓存</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#bean%E5%AF%B9%E8%B1%A1%E5%AE%9E%E7%8E%B0%E5%BA%8F%E5%88%97%E5%8C%96"><span class="nav-number">3.1.</span> <span class="nav-text">bean对象实现序列化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E6%B3%A8%E8%A7%A3%E7%BC%93%E5%AD%98%E5%AE%9E%E7%8E%B0"><span class="nav-number">3.2.</span> <span class="nav-text">使用注解缓存实现</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="haight"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">haight</p>
+  <div class="site-description" itemprop="description">Inside developer</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">24</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">20</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://haightgao.github.io/2022/04/12/java/spring-boot-ehcache-quickstart/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="haight">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CRUD">
+      <meta itemprop="description" content="Inside developer">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Spring Boot Ehcache | CRUD">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Spring Boot Ehcache
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2022-04-12 16:53:49 / 修改时间：20:46:08" itemprop="dateCreated datePublished" datetime="2022-04-12T16:53:49+08:00">2022-04-12</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/java/" itemprop="url" rel="index"><span itemprop="name">java</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <img src="/2022/04/12/java/spring-boot-ehcache-quickstart/banner.jpeg" class="">
+
+<span id="more"></span>
+
+<p>EhCache 是一个比较成的Java缓存框架，最早从 hibernate 发展而来，是进程中的缓存系统，它提供了内存、磁盘文件存储，以及分布式存储方案等多种灵活的cache管理方案。</p>
+<p>Sprging boot 对 Ehcache 的使用提供支持，所以在 spring boot 中只需要简单配置即可使用Ehcache实现数据缓存处理。</p>
+<h1 id="相关注解"><a href="#相关注解" class="headerlink" title="相关注解"></a>相关注解</h1><h2 id="CacheConfig"><a href="#CacheConfig" class="headerlink" title="@CacheConfig"></a>@CacheConfig</h2><p>用于标注在类上，可以存放该类中所有缓存的公有属性，比如设置缓存的名字</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">@CacheConfig(cacheName = &quot;users&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">UserService</span>(</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<p>配置了该数据访问对象中返回的内容将存储于名为 users 的缓存对象中，我们也可以不使用该注解，直接通过 @cacheable 自己配置缓存集的名字来定要。</p>
+<h2 id="Cacheable"><a href="#Cacheable" class="headerlink" title="@Cacheable"></a>@Cacheable</h2><p>应用到读取数据的方法上，即可缓存的方法，如查找方法，先从缓存中读取，如果没有再调用相应方法获取数据，然后把数据添加到缓存中。该注解主要有下面借个参数。</p>
+<ul>
+<li>value、cacheNames：两个等同的参数（cacheNames为 spring4新增，作为value的别名），用于指定缓存存储的集合名。由于spring4中新增了@CacheConfig，因此在spring3中原本必须有的value属性，也成了非必需项了。</li>
+<li>key：缓存对象存储在 Map 集合中的 key 值，非必需，缺省按照函数的所有参数组合作为key值，若自己配置需要使用 SpEl 表达式，比如 <code>@Cacheable(key = &quot;#p0&quot;)</code> 使用函数的第一个参数作为缓存的key值。</li>
+<li>condition：缓存对象的条件，非必需，也需要使用SpEl表达式，只有满足表达式条件的内容才会被缓存，比如：<code>@Cacheable(key = &quot;#p0&quot;, condition = &quot;#p0.length() &lt; 3&quot;)</code>，表示只有当第一个参数的长度小于3的时候才会被缓存。</li>
+<li>unless：另外一个缓存条件参数，非必需，也需要使用SpEL表达式。它不同于 condition 参数的地方在于它的判断时机，该条件是在函数被调用之后才做判断，所以它可以通过对 result 进行判断。</li>
+<li>keyGenerator：用于指定 key 生成器，非必需。若需要指定一个自定义的 key 生成器，我们需要去实现 <code>org.springframework.cache.interceptor.KeyGenerator</code>接口，并使用该参数来指定。需要注意的是，该参数与key是互斥的。</li>
+<li>cacheManager：用于指定使用哪个缓存管理器，非必需。只有当有多个时才需要使用。</li>
+<li>cacheResolver：用于指定使用哪个缓存解析器，非必需。需要通过 <code>org.springframework.cache.interceptor.CacheResolver</code>接口来实现自己的缓存解析器，并用该参数指定。</li>
+</ul>
+<h2 id="CachePut"><a href="#CachePut" class="headerlink" title="@CachePut"></a>@CachePut</h2><p>应用到写数据的方法上，如 新增/修改方法(此放必须返回需要写到缓存中的数据)，调用方法时会自动把相应的数据放入缓存，@CachePut的参数与@Cacheable类似。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@CachePut(value=&quot;users&quot;, key = &quot;#user.id&quot;)</span></span><br><span class="line"><span class="keyword">public</span> User <span class="title function_">add</span><span class="params">(User user)</span> &#123;</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="CacheEvict"><a href="#CacheEvict" class="headerlink" title="@CacheEvict"></a>@CacheEvict</h2><p>应用到删除数据的方法上，如删除方法，调用方法时会从缓存中移除相应的数据</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@cacheEvict(value = &quot;uses&quot;, key=&quot;#id&quot;)</span></span><br><span class="line"><span class="keyword">void</span> <span class="title function_">delete</span><span class="params">(<span class="keyword">final</span> Integer id)</span>;</span><br></pre></td></tr></table></figure>
+
+<p>除了同@Cacheable一样的参数之外，@CacheEvict还有下面两个参数：</p>
+<ul>
+<li>allEntries：非必需，默认是false。当为 true 时，会移除所有数据。</li>
+<li>beforeInvocation：非必需，默认为false，会在调用方法之后移除数据。当为true时，会在调用方法之前移除数据。</li>
+</ul>
+<h2 id="Caching"><a href="#Caching" class="headerlink" title="@Caching"></a>@Caching</h2><p>组合多个 Cache 注解使用，如</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Caching(</span></span><br><span class="line"><span class="meta">  put = &#123;</span></span><br><span class="line"><span class="meta">    @CachePut(value=&quot;user&quot;, key=&quot;#user.id&quot;)</span></span><br><span class="line"><span class="meta">    @CachePut(value=&quot;user&quot;, key=&quot;#user.username&quot;)</span></span><br><span class="line"><span class="meta">    @CachePut(value=&quot;user&quot;, key=&quot;#user.age&quot;)</span></span><br><span class="line"><span class="meta">  &#125;</span></span><br><span class="line"><span class="meta">)</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="环境配置"><a href="#环境配置" class="headerlink" title="环境配置"></a>环境配置</h1><h2 id="添加依赖"><a href="#添加依赖" class="headerlink" title="添加依赖"></a>添加依赖</h2><ul>
+<li>ehcache</li>
+<li>spring-boot-starter-cache</li>
+</ul>
+<figure class="highlight xml"><figcaption><span>pom.xml</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>net.sf.ehcache<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>ehcache<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-cache<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="缓存配置"><a href="#缓存配置" class="headerlink" title="缓存配置"></a>缓存配置</h2><p>src/main/resources 目录下添加文件 <code>ehcache.xml</code> ,内容如下</p>
+<figure class="highlight xml"><figcaption><span>ehcache.xml</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">ehcache</span> <span class="attr">name</span>=<span class="string">&quot;mycache&quot;</span>&gt;</span></span><br><span class="line">  <span class="comment">&lt;!--</span></span><br><span class="line"><span class="comment">    如果不使用磁盘缓存，只需要将 diskStore 注释掉即可;</span></span><br><span class="line"><span class="comment">    如果使用磁盘缓存，需要在ehcache.xml的ehcache元素下定义一个 diskStore元素并指定其 path 属性;</span></span><br><span class="line"><span class="comment">  --&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">diskStore</span> <span class="attr">path</span>=<span class="string">&quot;c:\java\cache&quot;</span> /&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">&lt;!--</span></span><br><span class="line"><span class="comment">    name: 缓存名称</span></span><br><span class="line"><span class="comment">    maxElementsInMemory：缓存最大数目</span></span><br><span class="line"><span class="comment">    maxElementsOnDisk：磁盘最大缓存数目</span></span><br><span class="line"><span class="comment">    eternal：对象是否永久有效，一旦设置了，timeout将不起作用</span></span><br><span class="line"><span class="comment">    overflowToDisk：是否保存到磁盘，当系统宕机时</span></span><br><span class="line"><span class="comment">    timeToIdleSeconds：设置对象在失效前的允许闲置时间（单位：秒）。仅当eternal=false对象不是永久有效时使用，可选属性，默认值是0，表示可闲置时间无穷大。</span></span><br><span class="line"><span class="comment">    timeToLiveSeconds：设置对象在失效前允许存活时间（单位：秒）。最大时间介于创建时间和失效时间之间。仅当eternal=false对象不是永久有效时使用，可选属性，默认值是0，表示可闲置时间无穷大。</span></span><br><span class="line"><span class="comment">    diskPersistent：是否缓存虚拟机重启期数据。默认值是false。</span></span><br><span class="line"><span class="comment">    diskSpoolBufferSizeMB：设置DiskStore（磁盘缓存）的缓存区大小，默认是30MB，每个cache都应该有自己的一个缓存区。</span></span><br><span class="line"><span class="comment">    diskExpiryThreadIntervalSeconds：磁盘失效线程运行时间间隔，默认是120秒。</span></span><br><span class="line"><span class="comment">    memoryStoreEvictionPolicy：当达到maxElemsInMemo限制时，会根据指定的策略去清理内存，默认策略是LRU（最近最少使用）。你可以设置为FIFO（先进先出）或是LFU（较少使用）</span></span><br><span class="line"><span class="comment">    clearOnFlush：内存数量最大时是否清除。</span></span><br><span class="line"><span class="comment">    memoryStoreEvictionPolicy：</span></span><br><span class="line"><span class="comment">      可选策略：</span></span><br><span class="line"><span class="comment">        LRU 最近最少使用，默认策略</span></span><br><span class="line"><span class="comment">        FIFO 先进先出</span></span><br><span class="line"><span class="comment">        LFU 最少访问次数</span></span><br><span class="line"><span class="comment">  --&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">defaultCache</span></span></span><br><span class="line"><span class="tag">    <span class="attr">maxElementsInMemory</span>=<span class="string">&quot;10000&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">eternal</span>=<span class="string">&quot;false&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">timeToIdleSeconds</span>=<span class="string">&quot;120&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">timeToLiveSeconds</span>=<span class="string">&quot;120&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">maxElementsOnDisk</span>=<span class="string">&quot;10000000&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">diskExpiryThreadIntervalSeconds</span>=<span class="string">&quot;120&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">memoryStoreEvictionPolicy</span>=<span class="string">&quot;LRU&quot;</span> /&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">&lt;!-- 指定的缓存配置 --&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">cache</span></span></span><br><span class="line"><span class="tag">    <span class="attr">name</span>=<span class="string">&quot;users&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">eternal</span>=<span class="string">&quot;false&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">maxElementsInMemory</span>=<span class="string">&quot;100&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">overflowToDisk</span>=<span class="string">&quot;false&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">diskPersistent</span>=<span class="string">&quot;false&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">timeToIdleSeconds</span>=<span class="string">&quot;0&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">timeToLiveSeconds</span>=<span class="string">&quot;300&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">memoryStoreEvictionPolicy</span>=<span class="string">&quot;LRU&quot;</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">ehcache</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="springboot-缓存配置"><a href="#springboot-缓存配置" class="headerlink" title="springboot 缓存配置"></a>springboot 缓存配置</h2><figure class="highlight yaml"><figcaption><span>application.yml</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment"># Ehcache缓存配置</span></span><br><span class="line"><span class="comment"># 数据源配置</span></span><br><span class="line"><span class="attr">spring:</span></span><br><span class="line">  <span class="comment">## 缓存配置</span></span><br><span class="line">  <span class="attr">cache:</span></span><br><span class="line">    <span class="attr">encache:</span></span><br><span class="line">      <span class="attr">config:</span> <span class="string">classpath:ehcache.xml</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="启动缓存"><a href="#启动缓存" class="headerlink" title="启动缓存"></a>启动缓存</h2><p>在项目的入口类中，添加 <code>@EnableCaching</code> 注解，启动缓存</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@SpringBootApplication</span></span><br><span class="line"><span class="meta">@EnableCaching</span></span><br><span class="line"><span class="meta">@MapperScan(&quot;com.xxx.dao&quot;)</span></span><br><span class="line"><span class="keyword">public</span> calss Starter&#123;</span><br><span class="line">  SpringApplicatin.run(Starter.class);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="使用缓存"><a href="#使用缓存" class="headerlink" title="使用缓存"></a>使用缓存</h1><h2 id="bean对象实现序列化"><a href="#bean对象实现序列化" class="headerlink" title="bean对象实现序列化"></a>bean对象实现序列化</h2><p>目标缓存对象需要实现序列化，如实体类</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> org.example.po;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> lombok.Data;</span><br><span class="line"><span class="keyword">import</span> org.hibernate.validator.constraints.Length;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> javax.validation.constraints.NotBlank;</span><br><span class="line"><span class="keyword">import</span> java.io.Serializable;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 用户</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Data</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">User</span> <span class="keyword">implements</span> <span class="title class_">Serializable</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> Integer userId;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@NotBlank(message = &quot;用户名不能为空&quot;)</span></span><br><span class="line">    <span class="keyword">private</span> String userName;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@NotBlank(message = &quot;密码不能为空&quot;)</span></span><br><span class="line">    <span class="meta">@Length(min =6, max = 10, message=&quot;密码长度至少6位但不超过10位&quot;)</span></span><br><span class="line">    <span class="keyword">private</span> String userPwd;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="使用注解缓存实现"><a href="#使用注解缓存实现" class="headerlink" title="使用注解缓存实现"></a>使用注解缓存实现</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> org.example.service;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.github.pagehelper.PageHelper;</span><br><span class="line"><span class="keyword">import</span> com.github.pagehelper.PageInfo;</span><br><span class="line"><span class="keyword">import</span> org.apache.commons.lang3.StringUtils;</span><br><span class="line"><span class="keyword">import</span> org.example.dao.UserMapper;</span><br><span class="line"><span class="keyword">import</span> org.example.po.User;</span><br><span class="line"><span class="keyword">import</span> org.example.query.UserQuery;</span><br><span class="line"><span class="keyword">import</span> org.example.util.AssertUtil;</span><br><span class="line"><span class="keyword">import</span> org.springframework.cache.annotation.CacheEvict;</span><br><span class="line"><span class="keyword">import</span> org.springframework.cache.annotation.CachePut;</span><br><span class="line"><span class="keyword">import</span> org.springframework.cache.annotation.Cacheable;</span><br><span class="line"><span class="keyword">import</span> org.springframework.stereotype.Service;</span><br><span class="line"><span class="keyword">import</span> org.springframework.transaction.annotation.Propagation;</span><br><span class="line"><span class="keyword">import</span> org.springframework.transaction.annotation.Transactional;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> javax.annotation.Resource;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"><span class="keyword">import</span> java.util.Map;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 用户业务类</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">UserService</span> &#123;</span><br><span class="line">    <span class="meta">@Resource</span></span><br><span class="line">    <span class="keyword">private</span> UserMapper userMapper;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 通过用户名获取用户信息</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> userName 用户名</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> 用户信息</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> User <span class="title function_">findUserByName</span><span class="params">(String userName)</span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">this</span>.userMapper.findUserByName(userName);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 通过用户Id获取用户信息</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> userId 用户Id</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Cacheable(value=&quot;users&quot;, key = &quot;#userId&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> User <span class="title function_">findUserById</span><span class="params">(Integer userId)</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">this</span>.userMapper.findUserById(userId);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 分页查询用户列表</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> userQuery</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Cacheable(value=&quot;users&quot;, key=&quot;#userQuery.userName + &#x27;-&#x27; + #userQuery.pageNum + &#x27;-&#x27; + #userQuery.pageSize&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> PageInfo&lt;User&gt; <span class="title function_">findUserByParam</span><span class="params">(UserQuery userQuery)</span>&#123;</span><br><span class="line">        <span class="comment">// 开启分页</span></span><br><span class="line">        PageHelper.startPage(userQuery.getPageNum(), userQuery.getPageSize());</span><br><span class="line">        <span class="comment">// 查询数据</span></span><br><span class="line">        List&lt;User&gt; userList = <span class="built_in">this</span>.userMapper.findUserByParam(userQuery);</span><br><span class="line">        <span class="comment">// 分页查询</span></span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">PageInfo</span>&lt;User&gt;(userList);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 添加用户</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> user</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@CachePut(value = &quot;users&quot;, key = &quot;#user.userId&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> User <span class="title function_">addUser</span><span class="params">(User user)</span> &#123;</span><br><span class="line">        <span class="comment">// 参数校验</span></span><br><span class="line">        AssertUtil.isTrue(user == <span class="literal">null</span>, <span class="string">&quot;用户信息不能为空&quot;</span>);</span><br><span class="line">        AssertUtil.isTrue(StringUtils.isBlank(user.getUserName()),<span class="string">&quot;用户姓名不能为空&quot;</span>);</span><br><span class="line">        AssertUtil.isTrue(StringUtils.isBlank(user.getUserPwd()),<span class="string">&quot;密码不能为空&quot;</span>);</span><br><span class="line">        AssertUtil.isTrue(<span class="built_in">this</span>.findUserByName(user.getUserName()) != <span class="literal">null</span>, <span class="string">&quot;用户名不能重复&quot;</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 执行添加操作</span></span><br><span class="line">        AssertUtil.isTrue(<span class="built_in">this</span>.userMapper.addUser(user) &lt; <span class="number">1</span>, <span class="string">&quot;添加用户失败&quot;</span>);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> user;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 修改用户</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> user</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Transactional(propagation = Propagation.REQUIRED)</span></span><br><span class="line">    <span class="meta">@CachePut(value = &quot;users&quot;, key = &quot;#user.userId&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> User <span class="title function_">updateUser</span><span class="params">(User user)</span>&#123;</span><br><span class="line">        <span class="comment">// 参数校验</span></span><br><span class="line">        AssertUtil.isTrue(user == <span class="literal">null</span>, <span class="string">&quot;用户信息不能为空&quot;</span>);</span><br><span class="line">        AssertUtil.isTrue(user.getUserId() == <span class="literal">null</span>,<span class="string">&quot;用户数据异常&quot;</span>);</span><br><span class="line">        AssertUtil.isTrue(StringUtils.isBlank(user.getUserName()),<span class="string">&quot;用户姓名不能为空&quot;</span>);</span><br><span class="line">        AssertUtil.isTrue(StringUtils.isBlank(user.getUserPwd()),<span class="string">&quot;密码不能为空&quot;</span>);</span><br><span class="line">        <span class="type">User</span> <span class="variable">checkUser</span> <span class="operator">=</span> <span class="built_in">this</span>.userMapper.findUserByName(user.getUserName());</span><br><span class="line">        AssertUtil.isTrue(checkUser != <span class="literal">null</span> &amp;&amp; !checkUser.getUserId().equals(user.getUserId()), <span class="string">&quot;用户名已存在&quot;</span>);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        <span class="comment">// 执行添加操作</span></span><br><span class="line">        AssertUtil.isTrue(<span class="built_in">this</span>.userMapper.updateUser(user) &lt; <span class="number">1</span>, <span class="string">&quot;修改用户失败&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> user;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 删除用户</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> userId 用户Id</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@CacheEvict(value = &quot;users&quot;, key = &quot;#userId&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">deleteUserById</span><span class="params">(Integer userId)</span>&#123;</span><br><span class="line">        AssertUtil.isTrue( userId == <span class="literal">null</span> ||<span class="built_in">this</span>.userMapper.findUserById(userId) == <span class="literal">null</span>, <span class="string">&quot;用户不存在&quot;</span>);</span><br><span class="line">        AssertUtil.isTrue(<span class="built_in">this</span>.userMapper.deleteUserById(userId) &lt; <span class="number">1</span>, <span class="string">&quot;删除用户失败&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/java/" rel="tag"># java</a>
+              <a href="/tags/spring-boot/" rel="tag"># spring boot</a>
+              <a href="/tags/cache/" rel="tag"># cache</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/04/10/java/spring-boot-mybatis-quickstart/" rel="prev" title="Spring Boot & MyBatis">
+                  <i class="fa fa-chevron-left"></i> Spring Boot & MyBatis
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">haight</span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/algoliasearch@4.13.0/dist/algoliasearch-lite.umd.js" integrity="sha256-UcrGMMl88PT0z5gvotNiqA7H30f1UJTUL9ZHey6i9jk=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/instantsearch.js@4.40.2/dist/instantsearch.production.min.js" integrity="sha256-q2scAnOKDe/wL7CAo3MYbrtc/3Ik9RqfpGyEFlgsh7I=" crossorigin="anonymous"></script><script src="/js/third-party/search/algolia-search.js"></script>
+
+
+
+
+  <script src="/js/third-party/pace.js"></script>
+
+  
+
+
+
+
+
+</body>
+</html>
