@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 5.4.1">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto+Sans+SC:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" integrity="sha256-DfWjNxDkM94fVBWx1H5BMMp0Zq7luBlV8QRcSES7s+0=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/themes/blue/pace-theme-minimal.css">
+  <script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"haightgao.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.11.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"algolia":{"appID":"CP7VU9VBF4","apiKey":"1e122b685321615480682b9ef19c87ba","indexName":"hexo_blog","hits":{"per_page":10}}}</script><script src="/js/config.js"></script>
+
+    <meta property="og:type" content="article">
+<meta property="og:title" content="Spring Boot 应用热部署">
+<meta property="og:url" content="https://haightgao.github.io/2022/04/13/java/spring-boot-hotbuild-quickstart/index.html">
+<meta property="og:site_name" content="CRUD">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://haightgao.github.io/2022/04/13/java/spring-boot-hotbuild-quickstart/banner.jpeg">
+<meta property="og:image" content="https://haightgao.github.io/2022/04/13/java/spring-boot-hotbuild-quickstart/idea_auto.png">
+<meta property="og:image" content="https://haightgao.github.io/2022/04/13/java/spring-boot-hotbuild-quickstart/idea_compiler.png">
+<meta property="article:published_time" content="2022-04-13T13:13:30.000Z">
+<meta property="article:modified_time" content="2022-04-13T13:56:19.943Z">
+<meta property="article:author" content="haight">
+<meta property="article:tag" content="java">
+<meta property="article:tag" content="spring boot">
+<meta property="article:tag" content="devtools">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://haightgao.github.io/2022/04/13/java/spring-boot-hotbuild-quickstart/banner.jpeg">
+
+
+<link rel="canonical" href="https://haightgao.github.io/2022/04/13/java/spring-boot-hotbuild-quickstart/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://haightgao.github.io/2022/04/13/java/spring-boot-hotbuild-quickstart/","path":"2022/04/13/java/spring-boot-hotbuild-quickstart/","title":"Spring Boot 应用热部署"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Spring Boot 应用热部署 | CRUD</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">CRUD</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">Inside developer</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container"></div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container">
+  <div class="algolia-stats"><hr></div>
+  <div class="algolia-hits"></div>
+  <div class="algolia-pagination"></div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%85%8D%E7%BD%AEDevTools%E7%8E%AF%E5%A2%83"><span class="nav-number">1.</span> <span class="nav-text">配置DevTools环境</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%85%A8%E5%B1%80%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E9%85%8D%E7%BD%AE"><span class="nav-number">2.</span> <span class="nav-text">全局配置文件配置</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Idea-%E9%85%8D%E7%BD%AE"><span class="nav-number">3.</span> <span class="nav-text">Idea 配置</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%B5%8B%E8%AF%95"><span class="nav-number">4.</span> <span class="nav-text">测试</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="haight"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">haight</p>
+  <div class="site-description" itemprop="description">Inside developer</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">26</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">22</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://haightgao.github.io/2022/04/13/java/spring-boot-hotbuild-quickstart/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="haight">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CRUD">
+      <meta itemprop="description" content="Inside developer">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Spring Boot 应用热部署 | CRUD">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Spring Boot 应用热部署
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2022-04-13 21:13:30 / 修改时间：21:56:19" itemprop="dateCreated datePublished" datetime="2022-04-13T21:13:30+08:00">2022-04-13</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/java/" itemprop="url" rel="index"><span itemprop="name">java</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <img src="/2022/04/13/java/spring-boot-hotbuild-quickstart/banner.jpeg" class="">
+
+<span id="more"></span>
+
+<p>SpringBoot通过配置DevTools工具来达到热部署效果。在原理上是使用了两个ClassLoader，一个ClassLoader加载那些不会改变的类（如第三方包），另一个ClassLoader加载会改变的类，称为Reset ClassLoader，这样在有代码改变的时候，原来的ResetClassLoader被丢弃，重新创建一个ResetClassLoader，由于需要加载的类比较少，所以实现了较快的重启时间。</p>
+<h1 id="配置DevTools环境"><a href="#配置DevTools环境" class="headerlink" title="配置DevTools环境"></a>配置DevTools环境</h1><p>引入 DevTools 依赖包，注意配置 <code>optional&gt;true&lt;/optional&gt;</code></p>
+<figure class="highlight xml"><figcaption><span>pom.xml</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-devtools<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">  <span class="comment">&lt;!-- 当前项目被继承之后，这个不向下传递 --&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">optional</span>&gt;</span>true<span class="tag">&lt;/<span class="name">optional</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>plugin中添加devtools生效标志</p>
+<figure class="highlight xml"><figcaption><span>pom.xml</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">build</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">finalName</span>&gt;</span>spring-boot-quickstart<span class="tag">&lt;/<span class="name">finalName</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">plugins</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">plugin</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-maven-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.6.6<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- 如果没有该配置，热部署的devtools不生效 --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">fork</span>&gt;</span>true<span class="tag">&lt;/<span class="name">fork</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">plugins</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">build</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>devtools 可以实现页面热部署（即页面修改后会立即生效，这个可以直接在 <code>application.properties</code> 文件中配置 <code>spring.thymeleaf.cache=fales</code> 来实现）,实现类文件热部署（类文件修改后不会立即生效），实现对属性文件的热部署。即devtools会监听 classpath 下的文件变动，并且会立即重启应用（发生在保存文件时候），注意：因为其采用的虚拟机机制，该项重启是很快的。配置了后在修改java文件后也就支持了热启动，不过这种方式是属于项目重启（速度比较快的项目重启），会清空session中的值，也就是如果有用户登录的话，项目重启后需要重新登录。</p>
+<p>默认情况下，/META-INF/maven，/META-INF/resources，/resources，/statuc，/templates，/public 这些文件夹下的文件修改不会使应用重启，但是会重新加载（devtools内嵌了一个LiveReload Server，当资源发生改变时，浏览器刷新）。</p>
+<h1 id="全局配置文件配置"><a href="#全局配置文件配置" class="headerlink" title="全局配置文件配置"></a>全局配置文件配置</h1><p>在 application.yml 中配置 spring.devtools.restart.enabled = false，此时 restart 类加载器还会初始化，但不会监视文件更新。</p>
+<figure class="highlight yaml"><figcaption><span>application.yml</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">spring:</span></span><br><span class="line">  <span class="comment">## 热部署配置</span></span><br><span class="line">  <span class="attr">devtools:</span></span><br><span class="line">    <span class="attr">restart:</span></span><br><span class="line">      <span class="attr">enabled:</span> <span class="literal">true</span></span><br><span class="line">      <span class="comment">## 设置重启的目录，添加目录的文件需要restart</span></span><br><span class="line">      <span class="attr">additional-paths:</span> <span class="string">src/main/java</span></span><br><span class="line">      <span class="comment">## 解决项目自动重新编译后接口报404的问题</span></span><br><span class="line">      <span class="attr">poll-interval:</span> <span class="number">3000</span></span><br><span class="line">      <span class="attr">quiet-period:</span> <span class="number">1000</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="Idea-配置"><a href="#Idea-配置" class="headerlink" title="Idea 配置"></a>Idea 配置</h1><p>当我们修改了java类后，Idea默认是不自动编译的，而 spring-boot-devtools又是监测 classpath 下的文件发生变化才会重启应用，所以需要设置 idea 的自动编译。</p>
+<ul>
+<li>自动编译配置<br>settings–&gt;compiler–&gt;Build project automatically</li>
+</ul>
+<img src="/2022/04/13/java/spring-boot-hotbuild-quickstart/idea_auto.png" class="">
+
+<ul>
+<li>Registry 属性修改</li>
+</ul>
+<p><code>Ctrl + Shift + alt + /</code> ，macos是 <code>command + option + shift + /</code> 选择 Registry，勾上 `Compiler.automark.allow.when.app.running</p>
+<p>如果此选项在 idea 中没有找到，那有可能是idea版本比较高，配置选项移到下图位置了。</p>
+<img src="/2022/04/13/java/spring-boot-hotbuild-quickstart/idea_compiler.png" class="">
+
+<h1 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h1><p>Ctrl + F9 重新编译</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/java/" rel="tag"># java</a>
+              <a href="/tags/spring-boot/" rel="tag"># spring boot</a>
+              <a href="/tags/devtools/" rel="tag"># devtools</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/04/13/java/spring-boot-test-quickstart/" rel="prev" title="Spring Boot 单元测试 quickstart">
+                  <i class="fa fa-chevron-left"></i> Spring Boot 单元测试 quickstart
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">haight</span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/algoliasearch@4.13.0/dist/algoliasearch-lite.umd.js" integrity="sha256-UcrGMMl88PT0z5gvotNiqA7H30f1UJTUL9ZHey6i9jk=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/instantsearch.js@4.40.2/dist/instantsearch.production.min.js" integrity="sha256-q2scAnOKDe/wL7CAo3MYbrtc/3Ik9RqfpGyEFlgsh7I=" crossorigin="anonymous"></script><script src="/js/third-party/search/algolia-search.js"></script>
+
+
+
+
+  <script src="/js/third-party/pace.js"></script>
+
+  
+
+
+
+
+
+</body>
+</html>
