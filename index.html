@@ -155,18 +155,18 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">57</span>
+          <span class="site-state-item-count">58</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/categories/">
-        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-count">6</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">32</span>
+        <span class="site-state-item-count">34</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -196,6 +196,139 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://haightgao.github.io/2022/05/09/dart/dart-stream/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="haight">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CRUD">
+      <meta itemprop="description" content="Inside developer">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | CRUD">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/05/09/dart/dart-stream/" class="post-title-link" itemprop="url">Dart Steam 流简介</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2022-05-09 22:42:48 / 修改时间：23:16:22" itemprop="dateCreated datePublished" datetime="2022-05-09T22:42:48+08:00">2022-05-09</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/dart/" itemprop="url" rel="index"><span itemprop="name">dart</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>什么是流，这篇<a target="_blank" rel="noopener" href="https://blog.csdn.net/yingshukun/article/details/100855253">Dart 语言Stream详解</a>文章讲得比较好，可以参考下。</p>
+<p>代码来自 <a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1YK4y1S7H6?spm_id_from=333.880.my_history.page.click">猫哥的bloc教程</a></p>
+<p>流可以分为两类：</p>
+<p>单订阅流(Single Subscription),这种流最多只能有一个监听器(listener)</p>
+<p>多订阅流(Broadcast),这种流可以有多个监听器监听（listener）</p>
+<h1 id="延迟间隔"><a href="#延迟间隔" class="headerlink" title="延迟间隔"></a>延迟间隔</h1><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="string">&#x27;dart:async&#x27;</span>;</span><br><span class="line"></span><br><span class="line">periodic() <span class="keyword">async</span> &#123;</span><br><span class="line">  Stream&lt;<span class="built_in">int</span>&gt; stream = Stream&lt;<span class="built_in">int</span>&gt;.periodic(<span class="built_in">Duration</span>(seconds: <span class="number">1</span>), (val) =&gt; val);</span><br><span class="line">  <span class="keyword">await</span> printStream(stream);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 打印流列表</span></span><br><span class="line">printStream(Stream&lt;<span class="built_in">Object</span>&gt; stream) <span class="keyword">async</span> &#123;</span><br><span class="line">  <span class="keyword">await</span> <span class="keyword">for</span> (<span class="keyword">var</span> val <span class="keyword">in</span> stream) &#123;</span><br><span class="line">    <span class="built_in">print</span>(val);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">main(<span class="built_in">List</span>&lt;<span class="built_in">String</span>&gt; args) <span class="keyword">async</span> &#123;</span><br><span class="line">  <span class="built_in">print</span>(<span class="string">&#x27;==== start ====&#x27;</span>);</span><br><span class="line">  <span class="comment">// 延迟间隔</span></span><br><span class="line">  <span class="keyword">await</span> periodic();</span><br><span class="line"></span><br><span class="line">  <span class="built_in">print</span>(<span class="string">&#x27;==== end ====&#x27;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>执行结果</p>
+<img src="/2022/05/09/dart/dart-stream/periodic.png" class="">
+
+<h1 id="future-数据源"><a href="#future-数据源" class="headerlink" title="future 数据源"></a>future 数据源</h1><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="string">&#x27;dart:async&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 打印流列表</span></span><br><span class="line">printStream(Stream&lt;<span class="built_in">Object</span>&gt; stream) <span class="keyword">async</span> &#123;</span><br><span class="line">  <span class="keyword">await</span> <span class="keyword">for</span> (<span class="keyword">var</span> val <span class="keyword">in</span> stream) &#123;</span><br><span class="line">    <span class="built_in">print</span>(val);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 异步函数i</span></span><br><span class="line">Future&lt;<span class="built_in">int</span>&gt; funi = Future(() &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="number">100</span>;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// future 数据源</span></span><br><span class="line">fromFuture() <span class="keyword">async</span> &#123;</span><br><span class="line">  Stream&lt;<span class="built_in">int</span>&gt; stream = Stream&lt;<span class="built_in">int</span>&gt;.fromFuture(funi);</span><br><span class="line">  <span class="keyword">await</span> printStream(stream);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">main(<span class="built_in">List</span>&lt;<span class="built_in">String</span>&gt; args) <span class="keyword">async</span> &#123;</span><br><span class="line">  <span class="built_in">print</span>(<span class="string">&#x27;==== start ====&#x27;</span>);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// future 数据源</span></span><br><span class="line">  <span class="keyword">await</span> fromFuture();</span><br><span class="line"></span><br><span class="line">  <span class="built_in">print</span>(<span class="string">&#x27;==== end ====&#x27;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>执行结果</p>
+<img src="/2022/05/09/dart/dart-stream/fromFuture.png" class="">
+
+<h1 id="future-多数据源"><a href="#future-多数据源" class="headerlink" title="future 多数据源"></a>future 多数据源</h1><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="string">&#x27;dart:async&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 打印流列表</span></span><br><span class="line">printStream(Stream&lt;<span class="built_in">Object</span>&gt; stream) <span class="keyword">async</span> &#123;</span><br><span class="line">  <span class="keyword">await</span> <span class="keyword">for</span> (<span class="keyword">var</span> val <span class="keyword">in</span> stream) &#123;</span><br><span class="line">    <span class="built_in">print</span>(val);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 异步函数i</span></span><br><span class="line">Future&lt;<span class="built_in">int</span>&gt; funi = Future(() &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="number">100</span>;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 异步函数i</span></span><br><span class="line">Future&lt;<span class="built_in">int</span>&gt; funii = Future(() &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="number">200</span>;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// future 多数据源</span></span><br><span class="line">fromFutures() <span class="keyword">async</span> &#123;</span><br><span class="line">  Stream&lt;<span class="built_in">int</span>&gt; stream = Stream&lt;<span class="built_in">int</span>&gt;.fromFutures([</span><br><span class="line">    funi,</span><br><span class="line">    funii,</span><br><span class="line">  ]);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">await</span> printStream(stream);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">main(<span class="built_in">List</span>&lt;<span class="built_in">String</span>&gt; args) <span class="keyword">async</span> &#123;</span><br><span class="line">  <span class="built_in">print</span>(<span class="string">&#x27;==== start ====&#x27;</span>);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// future 多数据源</span></span><br><span class="line">  <span class="keyword">await</span> fromFutures();</span><br><span class="line"></span><br><span class="line">  <span class="built_in">print</span>(<span class="string">&#x27;==== end ====&#x27;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>执行结果</p>
+<img src="/2022/05/09/dart/dart-stream/fromFutures.png" class="">
+
+<h1 id="Stream-监听-单对单-单订阅"><a href="#Stream-监听-单对单-单订阅" class="headerlink" title="Stream 监听 单对单(单订阅)"></a>Stream 监听 单对单(单订阅)</h1><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="string">&#x27;dart:async&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 打印流列表</span></span><br><span class="line">printStream(Stream&lt;<span class="built_in">Object</span>&gt; stream) <span class="keyword">async</span> &#123;</span><br><span class="line">  <span class="keyword">await</span> <span class="keyword">for</span> (<span class="keyword">var</span> val <span class="keyword">in</span> stream) &#123;</span><br><span class="line">    <span class="built_in">print</span>(val);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Stream 监听 单对单</span></span><br><span class="line">listen() <span class="keyword">async</span> &#123;</span><br><span class="line">  Stream&lt;<span class="built_in">int</span>&gt; stream = Stream&lt;<span class="built_in">int</span>&gt;.periodic(<span class="built_in">Duration</span>(seconds: <span class="number">1</span>), (val) =&gt; val);</span><br><span class="line"></span><br><span class="line">  stream.listen(</span><br><span class="line">    (event) &#123;</span><br><span class="line">      <span class="built_in">print</span>(event);</span><br><span class="line">    &#125;,</span><br><span class="line">    onError: (err) &#123;</span><br><span class="line">      <span class="built_in">print</span>(err);</span><br><span class="line">    &#125;,</span><br><span class="line">    onDone: () &#123;</span><br><span class="line">      <span class="built_in">print</span>(<span class="string">&#x27;done&#x27;</span>);</span><br><span class="line">    &#125;,</span><br><span class="line">    cancelOnError: <span class="keyword">true</span>,</span><br><span class="line">  );</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">main(<span class="built_in">List</span>&lt;<span class="built_in">String</span>&gt; args) <span class="keyword">async</span> &#123;</span><br><span class="line">  <span class="built_in">print</span>(<span class="string">&#x27;==== start ====&#x27;</span>);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Stream 监听 单对单</span></span><br><span class="line">  <span class="keyword">await</span> listen();</span><br><span class="line"></span><br><span class="line">  <span class="built_in">print</span>(<span class="string">&#x27;==== end ====&#x27;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>执行结果</p>
+<img src="/2022/05/09/dart/dart-stream/listen.png" class="">
+
+<h1 id="Stream-take"><a href="#Stream-take" class="headerlink" title="Stream take"></a>Stream take</h1><p>通过take方法控制Stream中的元素数量</p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="string">&#x27;dart:async&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 打印流列表</span></span><br><span class="line">printStream(Stream&lt;<span class="built_in">Object</span>&gt; stream) <span class="keyword">async</span> &#123;</span><br><span class="line">  <span class="keyword">await</span> <span class="keyword">for</span> (<span class="keyword">var</span> val <span class="keyword">in</span> stream) &#123;</span><br><span class="line">    <span class="built_in">print</span>(val);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Stream take</span></span><br><span class="line">take(<span class="built_in">int</span> max) <span class="keyword">async</span> &#123;</span><br><span class="line">  Stream&lt;<span class="built_in">int</span>&gt; stream =</span><br><span class="line">      Stream&lt;<span class="built_in">int</span>&gt;.periodic(<span class="built_in">Duration</span>(seconds: <span class="number">1</span>), (val) =&gt; val).take(max);</span><br><span class="line"></span><br><span class="line">  stream.listen(</span><br><span class="line">    (event) &#123;</span><br><span class="line">      <span class="built_in">print</span>(event);</span><br><span class="line">    &#125;,</span><br><span class="line">    onError: (err) &#123;</span><br><span class="line">      <span class="built_in">print</span>(err);</span><br><span class="line">    &#125;,</span><br><span class="line">    onDone: () &#123;</span><br><span class="line">      <span class="built_in">print</span>(<span class="string">&#x27;done&#x27;</span>);</span><br><span class="line">    &#125;,</span><br><span class="line">    cancelOnError: <span class="keyword">true</span>,</span><br><span class="line">  );</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">main(<span class="built_in">List</span>&lt;<span class="built_in">String</span>&gt; args) <span class="keyword">async</span> &#123;</span><br><span class="line">  <span class="built_in">print</span>(<span class="string">&#x27;==== start ====&#x27;</span>);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Stream take</span></span><br><span class="line">  <span class="keyword">await</span> take(<span class="number">10</span>);</span><br><span class="line"></span><br><span class="line">  <span class="built_in">print</span>(<span class="string">&#x27;==== end ====&#x27;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>执行结果</p>
+<img src="/2022/05/09/dart/dart-stream/take.png" class="">
+
+<h1 id="Stream-skip"><a href="#Stream-skip" class="headerlink" title="Stream skip"></a>Stream skip</h1><p>通过skip方法跳过Stream中的数据</p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="string">&#x27;dart:async&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 打印流列表</span></span><br><span class="line">printStream(Stream&lt;<span class="built_in">Object</span>&gt; stream) <span class="keyword">async</span> &#123;</span><br><span class="line">  <span class="keyword">await</span> <span class="keyword">for</span> (<span class="keyword">var</span> val <span class="keyword">in</span> stream) &#123;</span><br><span class="line">    <span class="built_in">print</span>(val);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Stream skip</span></span><br><span class="line">skip(<span class="built_in">int</span> max, <span class="built_in">int</span> skipNum) <span class="keyword">async</span> &#123;</span><br><span class="line">  Stream&lt;<span class="built_in">int</span>&gt; stream =</span><br><span class="line">      Stream&lt;<span class="built_in">int</span>&gt;.fromIterable(<span class="built_in">Iterable</span>.generate(max)).skip(skipNum);</span><br><span class="line"></span><br><span class="line">  stream.listen(</span><br><span class="line">    (event) &#123;</span><br><span class="line">      <span class="built_in">print</span>(event);</span><br><span class="line">    &#125;,</span><br><span class="line">    onError: (err) &#123;</span><br><span class="line">      <span class="built_in">print</span>(err);</span><br><span class="line">    &#125;,</span><br><span class="line">    onDone: () &#123;</span><br><span class="line">      <span class="built_in">print</span>(<span class="string">&#x27;done&#x27;</span>);</span><br><span class="line">    &#125;,</span><br><span class="line">    cancelOnError: <span class="keyword">true</span>,</span><br><span class="line">  );</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">main(<span class="built_in">List</span>&lt;<span class="built_in">String</span>&gt; args) <span class="keyword">async</span> &#123;</span><br><span class="line">  <span class="built_in">print</span>(<span class="string">&#x27;==== start ====&#x27;</span>);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Stream skip</span></span><br><span class="line">  <span class="keyword">await</span> skip(<span class="number">10</span>, <span class="number">4</span>);</span><br><span class="line"></span><br><span class="line">  <span class="built_in">print</span>(<span class="string">&#x27;==== end ====&#x27;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>执行结果</p>
+<img src="/2022/05/09/dart/dart-stream/skip.png" class="">
+
+<h1 id="Stream-监听-广播"><a href="#Stream-监听-广播" class="headerlink" title="Stream 监听 广播"></a>Stream 监听 广播</h1><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="string">&#x27;dart:async&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 打印流列表</span></span><br><span class="line">printStream(Stream&lt;<span class="built_in">Object</span>&gt; stream) <span class="keyword">async</span> &#123;</span><br><span class="line">  <span class="keyword">await</span> <span class="keyword">for</span> (<span class="keyword">var</span> val <span class="keyword">in</span> stream) &#123;</span><br><span class="line">    <span class="built_in">print</span>(val);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Stream 监听 广播</span></span><br><span class="line">boardcast() <span class="keyword">async</span> &#123;</span><br><span class="line">  Stream&lt;<span class="built_in">int</span>&gt; stream = Stream&lt;<span class="built_in">int</span>&gt;.periodic(<span class="built_in">Duration</span>(seconds: <span class="number">1</span>), (val) =&gt; val)</span><br><span class="line">      .asBroadcastStream();</span><br><span class="line"></span><br><span class="line">  stream.listen(</span><br><span class="line">    (event) &#123;</span><br><span class="line">      <span class="built_in">print</span>(<span class="string">&#x27;监听1 <span class="subst">$event</span>&#x27;</span>);</span><br><span class="line">    &#125;,</span><br><span class="line">    onError: (err) &#123;</span><br><span class="line">      <span class="built_in">print</span>(<span class="string">&#x27;监听1 <span class="subst">$err</span>&#x27;</span>);</span><br><span class="line">    &#125;,</span><br><span class="line">    onDone: () &#123;</span><br><span class="line">      <span class="built_in">print</span>(<span class="string">&#x27;监听1 done&#x27;</span>);</span><br><span class="line">    &#125;,</span><br><span class="line">    cancelOnError: <span class="keyword">true</span>,</span><br><span class="line">  );</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">main(<span class="built_in">List</span>&lt;<span class="built_in">String</span>&gt; args) <span class="keyword">async</span> &#123;</span><br><span class="line">  <span class="built_in">print</span>(<span class="string">&#x27;==== start ====&#x27;</span>);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Stream 监听 广播</span></span><br><span class="line">  <span class="keyword">await</span> boardcast();</span><br><span class="line"></span><br><span class="line">  <span class="built_in">print</span>(<span class="string">&#x27;==== end ====&#x27;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>执行结果</p>
+<img src="/2022/05/09/dart/dart-stream/boardcast.png" class="">
+
+<h1 id="StreamController-流控制器-单点"><a href="#StreamController-流控制器-单点" class="headerlink" title="StreamController 流控制器 单点"></a>StreamController 流控制器 单点</h1><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="string">&#x27;dart:async&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 打印流列表</span></span><br><span class="line">printStream(Stream&lt;<span class="built_in">Object</span>&gt; stream) <span class="keyword">async</span> &#123;</span><br><span class="line">  <span class="keyword">await</span> <span class="keyword">for</span> (<span class="keyword">var</span> val <span class="keyword">in</span> stream) &#123;</span><br><span class="line">    <span class="built_in">print</span>(val);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// StreamController 流控制器 单点</span></span><br><span class="line">scListen() <span class="keyword">async</span> &#123;</span><br><span class="line">  <span class="comment">// 定义流控制器</span></span><br><span class="line">  StreamController sc = StreamController(</span><br><span class="line">    onListen: () =&gt; <span class="built_in">print</span>(<span class="string">&#x27;onListen&#x27;</span>),</span><br><span class="line">    onPause: () =&gt; <span class="built_in">print</span>(<span class="string">&#x27;onPause&#x27;</span>),</span><br><span class="line">    onResume: () =&gt; <span class="built_in">print</span>(<span class="string">&#x27;onResume&#x27;</span>),</span><br><span class="line">    onCancel: () =&gt; <span class="built_in">print</span>(<span class="string">&#x27;onCancel&#x27;</span>),</span><br><span class="line">    <span class="keyword">sync</span>: <span class="keyword">false</span>, <span class="comment">// 是否同步</span></span><br><span class="line">  );</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 订阅</span></span><br><span class="line">  StreamSubscription ss = sc.stream.listen(<span class="built_in">print</span>);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 操作流</span></span><br><span class="line">  sc.add(<span class="number">100</span>);</span><br><span class="line">  <span class="keyword">await</span> Future.delayed(<span class="built_in">Duration</span>(seconds: <span class="number">1</span>));</span><br><span class="line"></span><br><span class="line">  sc.add(<span class="number">200</span>);</span><br><span class="line">  <span class="keyword">await</span> Future.delayed(<span class="built_in">Duration</span>(seconds: <span class="number">1</span>));</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 暂停订阅</span></span><br><span class="line">  ss.pause();</span><br><span class="line">  <span class="keyword">await</span> Future.delayed(<span class="built_in">Duration</span>(seconds: <span class="number">1</span>));</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 恢复订阅</span></span><br><span class="line">  ss.resume();</span><br><span class="line">  <span class="keyword">await</span> Future.delayed(<span class="built_in">Duration</span>(seconds: <span class="number">1</span>));</span><br><span class="line"></span><br><span class="line">  sc.add(<span class="number">300</span>);</span><br><span class="line">  <span class="keyword">await</span> Future.delayed(<span class="built_in">Duration</span>(seconds: <span class="number">1</span>));</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 取消订阅</span></span><br><span class="line">  <span class="comment">// ss.cancel();</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">// 重要：使用完流一定要关闭流</span></span><br><span class="line">  sc.close();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">main(<span class="built_in">List</span>&lt;<span class="built_in">String</span>&gt; args) <span class="keyword">async</span> &#123;</span><br><span class="line">  <span class="built_in">print</span>(<span class="string">&#x27;==== start ====&#x27;</span>);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// StreamController 流控制器 单点</span></span><br><span class="line">  <span class="keyword">await</span> scListen();</span><br><span class="line"></span><br><span class="line">  <span class="built_in">print</span>(<span class="string">&#x27;==== end ====&#x27;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>执行结果</p>
+<img src="/2022/05/09/dart/dart-stream/sc.png" class="">
+
+<h1 id="StreamController-流控制器-广播"><a href="#StreamController-流控制器-广播" class="headerlink" title="StreamController 流控制器 广播"></a>StreamController 流控制器 广播</h1><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="string">&#x27;dart:async&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 打印流列表</span></span><br><span class="line">printStream(Stream&lt;<span class="built_in">Object</span>&gt; stream) <span class="keyword">async</span> &#123;</span><br><span class="line">  <span class="keyword">await</span> <span class="keyword">for</span> (<span class="keyword">var</span> val <span class="keyword">in</span> stream) &#123;</span><br><span class="line">    <span class="built_in">print</span>(val);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// StreamController 流控制器 广播</span></span><br><span class="line">scBroadcaset() <span class="keyword">async</span> &#123;</span><br><span class="line">  StreamController sc = StreamController.broadcast();</span><br><span class="line"></span><br><span class="line">  sc.stream.listen(<span class="built_in">print</span>);</span><br><span class="line">  sc.stream.listen(<span class="built_in">print</span>);</span><br><span class="line"></span><br><span class="line">  sc.addStream(Stream.fromIterable([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>]));</span><br><span class="line"></span><br><span class="line">  <span class="keyword">await</span> Future.delayed(<span class="built_in">Duration</span>(seconds: <span class="number">2</span>));</span><br><span class="line">  sc.close();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">main(<span class="built_in">List</span>&lt;<span class="built_in">String</span>&gt; args) <span class="keyword">async</span> &#123;</span><br><span class="line">  <span class="built_in">print</span>(<span class="string">&#x27;==== start ====&#x27;</span>);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// StreamController 流控制器 广播</span></span><br><span class="line">  <span class="keyword">await</span> scBroadcaset();</span><br><span class="line"></span><br><span class="line">  <span class="built_in">print</span>(<span class="string">&#x27;==== end ====&#x27;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>执行结果</p>
+<img src="/2022/05/09/dart/dart-stream/scb.png" class="">
+
+<h1 id="StreamTransformer-流的转换"><a href="#StreamTransformer-流的转换" class="headerlink" title="StreamTransformer 流的转换"></a>StreamTransformer 流的转换</h1><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="string">&#x27;dart:async&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 打印流列表</span></span><br><span class="line">printStream(Stream&lt;<span class="built_in">Object</span>&gt; stream) <span class="keyword">async</span> &#123;</span><br><span class="line">  <span class="keyword">await</span> <span class="keyword">for</span> (<span class="keyword">var</span> val <span class="keyword">in</span> stream) &#123;</span><br><span class="line">    <span class="built_in">print</span>(val);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// StreamTransformer 流的转换</span></span><br><span class="line">scTransformer() <span class="keyword">async</span> &#123;</span><br><span class="line">  StreamController sc = StreamController&lt;<span class="built_in">int</span>&gt;.broadcast();</span><br><span class="line"></span><br><span class="line">  StreamTransformer stf = StreamTransformer&lt;<span class="built_in">int</span>, <span class="built_in">String</span>&gt;.fromHandlers(</span><br><span class="line">    handleData: (<span class="built_in">int</span> data, EventSink sink) &#123;</span><br><span class="line">      sink.add(<span class="string">&#x27;转换后的数据：<span class="subst">$&#123;data * <span class="number">2</span>&#125;</span>&#x27;</span>);</span><br><span class="line">    &#125;,</span><br><span class="line">    handleError: (error, stacktrace, sink) &#123;</span><br><span class="line">      sink.addError(<span class="string">&#x27;error: <span class="subst">$error</span>&#x27;</span>);</span><br><span class="line">    &#125;,</span><br><span class="line">    handleDone: (sink) &#123;</span><br><span class="line">      sink.close();</span><br><span class="line">    &#125;,</span><br><span class="line">  );</span><br><span class="line"></span><br><span class="line">  Stream stream = sc.stream.transform(stf);</span><br><span class="line">  stream.listen(<span class="built_in">print</span>);</span><br><span class="line">  stream.listen(<span class="built_in">print</span>);</span><br><span class="line"></span><br><span class="line">  sc.addStream(Stream&lt;<span class="built_in">int</span>&gt;.fromIterable([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>]));</span><br><span class="line"></span><br><span class="line">  <span class="keyword">await</span> Future.delayed(<span class="built_in">Duration</span>(seconds: <span class="number">2</span>));</span><br><span class="line"></span><br><span class="line">  sc.close();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">main(<span class="built_in">List</span>&lt;<span class="built_in">String</span>&gt; args) <span class="keyword">async</span> &#123;</span><br><span class="line">  <span class="built_in">print</span>(<span class="string">&#x27;==== start ====&#x27;</span>);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// StreamTransformer 流的转换</span></span><br><span class="line">  <span class="keyword">await</span> scTransformer();</span><br><span class="line"></span><br><span class="line">  <span class="built_in">print</span>(<span class="string">&#x27;==== end ====&#x27;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>执行结果</p>
+<img src="/2022/05/09/dart/dart-stream/trans.png" class="">
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -235,7 +368,16 @@
       <span class="post-meta-item-text">发表于</span>
       
 
-      <time title="创建时间：2022-05-04 17:24:30 / 修改时间：20:16:27" itemprop="dateCreated datePublished" datetime="2022-05-04T17:24:30+08:00">2022-05-04</time>
+      <time title="创建时间：2022-05-04 17:24:30 / 修改时间：20:20:05" itemprop="dateCreated datePublished" datetime="2022-05-04T17:24:30+08:00">2022-05-04</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/flutter/" itemprop="url" rel="index"><span itemprop="name">flutter</span></a>
+        </span>
     </span>
 
   
@@ -940,92 +1082,6 @@
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2022/04/27/flutter/dialog/alertdialog/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://haightgao.github.io/2022/04/27/flutter/dialog/bottomsheet/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="haight">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="CRUD">
-      <meta itemprop="description" content="Inside developer">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | CRUD">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/04/27/flutter/dialog/bottomsheet/" class="post-title-link" itemprop="url">Flutter 底部弹出面板的使用</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-      
-
-      <time title="创建时间：2022-04-27 13:50:18 / 修改时间：13:54:20" itemprop="dateCreated datePublished" datetime="2022-04-27T13:50:18+08:00">2022-04-27</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/flutter/" itemprop="url" rel="index"><span itemprop="name">flutter</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <img src="/2022/04/27/flutter/dialog/bottomsheet/preview.gif" class="" width="200">
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2022/04/27/flutter/dialog/bottomsheet/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
