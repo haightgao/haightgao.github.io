@@ -23,26 +23,29 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"haightgao.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.11.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"algolia":{"appID":"CP7VU9VBF4","apiKey":"1e122b685321615480682b9ef19c87ba","indexName":"hexo_blog","hits":{"per_page":10}}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="Inside developer">
-<meta property="og:type" content="website">
-<meta property="og:title" content="CRUD">
-<meta property="og:url" content="https://haightgao.github.io/tags/flutter/page/4/index.html">
+    <meta name="description" content="路由管理状态管理 get state_rebuilder bloc flutter_bloc riverpod  本地存储Http http dio dio_cookie_manager  UI glassmorphism  JSON freezed  Other url_launcher retrofit">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Flutter 常用第三方包">
+<meta property="og:url" content="https://haightgao.github.io/2022/05/17/flutter/good-package/index.html">
 <meta property="og:site_name" content="CRUD">
-<meta property="og:description" content="Inside developer">
+<meta property="og:description" content="路由管理状态管理 get state_rebuilder bloc flutter_bloc riverpod  本地存储Http http dio dio_cookie_manager  UI glassmorphism  JSON freezed  Other url_launcher retrofit">
 <meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-05-17T14:34:14.000Z">
+<meta property="article:modified_time" content="2022-05-17T14:45:11.174Z">
 <meta property="article:author" content="haight">
-<meta property="article:tag" content="haight ght blog java dotnet nodejs vuejs reactjs mysql sqlserver nestjs">
+<meta property="article:tag" content="flutter">
+<meta property="article:tag" content="package">
 <meta name="twitter:card" content="summary">
 
 
-<link rel="canonical" href="https://haightgao.github.io/tags/flutter/page/4/">
+<link rel="canonical" href="https://haightgao.github.io/2022/05/17/flutter/good-package/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":false,"lang":"zh-CN","comments":"","permalink":"","path":"tags/flutter/page/4/index.html","title":""}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://haightgao.github.io/2022/05/17/flutter/good-package/","path":"2022/05/17/flutter/good-package/","title":"Flutter 常用第三方包"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>标签: flutter | CRUD</title>
+<title>Flutter 常用第三方包 | CRUD</title>
   
 
 
@@ -128,7 +131,7 @@
 
   <aside class="sidebar">
 
-    <div class="sidebar-inner sidebar-overview-active">
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
       <ul class="sidebar-nav">
         <li class="sidebar-nav-toc">
           文章目录
@@ -141,6 +144,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%B7%AF%E7%94%B1%E7%AE%A1%E7%90%86"><span class="nav-number">1.</span> <span class="nav-text">路由管理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%8A%B6%E6%80%81%E7%AE%A1%E7%90%86"><span class="nav-number">2.</span> <span class="nav-text">状态管理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9C%AC%E5%9C%B0%E5%AD%98%E5%82%A8"><span class="nav-number">3.</span> <span class="nav-text">本地存储</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Http"><span class="nav-number">4.</span> <span class="nav-text">Http</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#UI"><span class="nav-number">5.</span> <span class="nav-text">UI</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#JSON"><span class="nav-number">6.</span> <span class="nav-text">JSON</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Other"><span class="nav-number">7.</span> <span class="nav-text">Other</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -195,113 +199,123 @@
 </noscript>
 
 
-    <div class="main-inner tag posts-collapse">
+    <div class="main-inner post posts-expand">
 
 
   
+
+
+<div class="post-block">
   
   
-  <div class="post-block">
-    <div class="post-content">
-      <div class="collection-title">
-        <h1 class="collection-header">flutter
-          <small>标签</small>
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://haightgao.github.io/2022/05/17/flutter/good-package/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="haight">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CRUD">
+      <meta itemprop="description" content="Inside developer">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Flutter 常用第三方包 | CRUD">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Flutter 常用第三方包
         </h1>
-      </div>
 
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
       
-    <div class="collection-year">
-      <span class="collection-header">2022</span>
+
+      <time title="创建时间：2022-05-17 22:34:14 / 修改时间：22:45:11" itemprop="dateCreated datePublished" datetime="2022-05-17T22:34:14+08:00">2022-05-17</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/flutter/" itemprop="url" rel="index"><span itemprop="name">flutter</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="路由管理"><a href="#路由管理" class="headerlink" title="路由管理"></a>路由管理</h1><h1 id="状态管理"><a href="#状态管理" class="headerlink" title="状态管理"></a>状态管理</h1><ul>
+<li><a target="_blank" rel="noopener" href="https://pub.dev/packages/get">get</a></li>
+<li><a target="_blank" rel="noopener" href="https://pub.dev/packages/states_rebuilder">state_rebuilder</a></li>
+<li><a target="_blank" rel="noopener" href="https://pub.dev/packages/bloc">bloc</a></li>
+<li><a target="_blank" rel="noopener" href="https://pub.dev/packages/flutter_bloc">flutter_bloc</a></li>
+<li><a target="_blank" rel="noopener" href="https://pub.dev/packages/riverpod">riverpod</a></li>
+</ul>
+<h1 id="本地存储"><a href="#本地存储" class="headerlink" title="本地存储"></a>本地存储</h1><h1 id="Http"><a href="#Http" class="headerlink" title="Http"></a>Http</h1><ul>
+<li><a target="_blank" rel="noopener" href="https://pub.dev/packages/http">http</a></li>
+<li><a target="_blank" rel="noopener" href="https://pub.dev/packages/dio">dio</a></li>
+<li><a target="_blank" rel="noopener" href="https://pub.dev/packages/dio_cookie_manager">dio_cookie_manager</a></li>
+</ul>
+<h1 id="UI"><a href="#UI" class="headerlink" title="UI"></a>UI</h1><ul>
+<li><a target="_blank" rel="noopener" href="https://pub.dev/packages/glassmorphism">glassmorphism</a></li>
+</ul>
+<h1 id="JSON"><a href="#JSON" class="headerlink" title="JSON"></a>JSON</h1><ul>
+<li><a target="_blank" rel="noopener" href="https://pub.dev/packages/freezed">freezed</a></li>
+</ul>
+<h1 id="Other"><a href="#Other" class="headerlink" title="Other"></a>Other</h1><ul>
+<li><a target="_blank" rel="noopener" href="https://pub.dev/packages/url_launcher">url_launcher</a></li>
+<li><a target="_blank" rel="noopener" href="https://pub.dev/packages/retrofit">retrofit</a></li>
+</ul>
+
     </div>
 
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-      <div class="post-meta-container">
-        <time itemprop="dateCreated"
-              datetime="2022-04-18T10:56:14+08:00"
-              content="2022-04-18">
-          04-18
-        </time>
-      </div>
+    
+    
+    
 
-      <div class="post-title">
-          <a class="post-title-link" href="/2022/04/18/flutter/login/login04/" itemprop="url">
-            <span itemprop="name">Flutter 登录页-04</span>
-          </a>
-      </div>
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/flutter/" rel="tag"># flutter</a>
+              <a href="/tags/package/" rel="tag"># package</a>
+          </div>
 
-      
-    </header>
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/05/12/dev/flutter-null-ware-error/" rel="prev" title="解决 flutter 警告 Operand of null-aware operation '!' has type 'WidgetsBinding' which excludes null">
+                  <i class="fa fa-chevron-left"></i> 解决 flutter 警告 Operand of null-aware operation '!' has type 'WidgetsBinding' which excludes null
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
   </article>
+</div>
 
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-      <div class="post-meta-container">
-        <time itemprop="dateCreated"
-              datetime="2022-04-17T22:10:24+08:00"
-              content="2022-04-17">
-          04-17
-        </time>
-      </div>
 
-      <div class="post-title">
-          <a class="post-title-link" href="/2022/04/17/flutter/login/login03/" itemprop="url">
-            <span itemprop="name">Flutter 登录页-03</span>
-          </a>
-      </div>
 
-      
-    </header>
-  </article>
 
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-      <div class="post-meta-container">
-        <time itemprop="dateCreated"
-              datetime="2022-04-15T23:29:20+08:00"
-              content="2022-04-15">
-          04-15
-        </time>
-      </div>
 
-      <div class="post-title">
-          <a class="post-title-link" href="/2022/04/15/flutter/login/login02/" itemprop="url">
-            <span itemprop="name">Flutter 登录页-02</span>
-          </a>
-      </div>
-
-      
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-      <div class="post-meta-container">
-        <time itemprop="dateCreated"
-              datetime="2022-04-15T15:29:53+08:00"
-              content="2022-04-15">
-          04-15
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2022/04/15/flutter/login/login01/" itemprop="url">
-            <span itemprop="name">Flutter 登录页-01</span>
-          </a>
-      </div>
-
-      
-    </header>
-  </article>
-
-    </div>
-  </div>
-  
-  
-  
-  <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/tags/flutter/page/3/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/tags/flutter/">1</a><span class="space">&hellip;</span><a class="page-number" href="/tags/flutter/page/3/">3</a><span class="page-number current">4</span>
-  </nav>
 
 </div>
   </main>
